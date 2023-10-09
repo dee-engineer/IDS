@@ -302,15 +302,22 @@ svm_model = SVC(kernel='sigmoid', gamma=0.01, coef0=0.0, C=1.0)
 #Fit the SVM model to the training data:
 svm_model.fit(x_train_scaled, y_train)
 
+# Define the path where you want to save the file
+file_path = os.path.join(current_directory, 'Datasets', 'SVM_Models', 'Sigmoid_Kernel', 'svm_model_category1_sigmoid.pkl')
+
+
+# Ensure that the directory structure exists
+os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
 # Save the trained model to a file
-joblib.dump(svm_model, os.path.join(current_directory, 'Datasets', 'SVM_Models', 'Sigmoid_Kernel', 'svm_model_category1_sigmoid.pkl'))
+joblib.dump(svm_model, file_path)
 
 
 
 #Attack Category 1 - Sigmoid Kernel
 
 #Load the saved model from the file
-loaded_svm_model = joblib.load(os.path.join(current_directory, 'Final_Data', 'SVM_Models', 'Sigmoid_Kernel', 'svm_model_category1_sigmoid.pkl'))
+loaded_svm_model = joblib.load(os.path.join(current_directory, 'Datasets', 'SVM_Models', 'Sigmoid_Kernel', 'svm_model_category1_sigmoid.pkl'))
 
 #Read the test data file:
 test_data = pd.read_csv(os.path.join(current_directory, 'Datasets', 'Evaluation_Data', 'Merged_Files', 'Category1_20_merged_final.txt'))
