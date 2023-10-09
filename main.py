@@ -16,13 +16,19 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.preprocessing import StandardScaler
 
+# Get the current working directory
+current_directory = os.getcwd()
+
+
+# Now you can use the 'file_path' variable in your code
+
 
 
 # Task 1: Splitting based on 'binary result' column in order to identify Benign and Attacks
 # from our dataset file and then create new files based on the results
 
 input_file = r"IanArffDataset.csv"
-output_dir = r"/home/divine/Projects/IDS/Datasets"
+output_dir = os.path.join(current_directory, 'Datasets')
 binary_result_column_name = 'binary result'
 categorized_result_column_name = 'categorized result'
 
@@ -92,9 +98,9 @@ with open(attacks_input_file, 'r') as attacks_file:
 # Task 3: Splitting data for each category and Benign into 80% and 20%
 # for training our SVM model (80% data) and then use the rest of the data(20%) for evaluation
 
-input_dir = r"/home/divine/Projects/IDS/Datasets"
-output_dir80 = r"/home/divine/Projects/IDS/Datasets/Training_Data"
-output_dir20 = r"/home/divine/Projects/IDS/Datasets/Evaluation_Data"
+input_dir = os.path.join(current_directory, 'Datasets')
+output_dir80 = os.path.join(current_directory, 'Datasets', 'Training_Data')
+output_dir20 = os.path.join(current_directory, 'Datasets', 'Evaluation_Data')
 file_suffixes = ['80', '20']
 
 # Retrieve the files in the input directory
@@ -132,7 +138,7 @@ for file_name in file_names:
 
 #Task 4: Sort the training and evaluation files based on the 'id' column
 
-directory = r"/home/divine/Projects/IDS/Datasets"
+directory = os.path.join(current_directory, 'Datasets')
 
 for root, _, files in os.walk(directory):
     for filename in files:
@@ -161,8 +167,8 @@ for root, _, files in os.walk(directory):
 #the new Benign files that were created. 80% and 20% respectively and create new files
 #and then sort the new files based on 'id'
 
-directory = r"/home/divine/Projects/IDS/Datasets/Training_Data"
-output_directory = r"/home/divine/Projects/IDS/Datasets/Training_Data/Merged_Files"
+directory = os.path.join(current_directory, 'Datasets', 'Training_Data')
+output_directory = os.path.join(current_directory, 'Datasets', 'Training_Data', 'Merged_Files')
 
 # Create the output directory if it doesn't exist
 os.makedirs(output_directory, exist_ok=True)
@@ -202,8 +208,8 @@ for filename in os.listdir(directory):
                     writer.writerow(row)
 
 
-directory = r"/home/divine/Projects/IDS/Datasets/Evaluation_Data"
-output_directory = r"/home/divine/Projects/IDS/Datasets/Evaluation_Data/Merged_Files"
+directory = os.path.join(current_directory, 'Datasets', 'Evaluation_Data')
+output_directory = os.path.join(current_directory, 'Datasets', 'Evaluation_Data', 'Merged_Files')
 
 # Create the output directory if it doesn't exist
 os.makedirs(output_directory, exist_ok=True)
@@ -243,7 +249,7 @@ for filename in os.listdir(directory):
                     writer.writerow(row)
 
 
-output_dir = r"/home/divine/Projects/IDS/Datasets"
+output_dir = os.path.join(current_directory, 'Datasets')
 
 # Iterate through all files and subdirectories within output_dir
 for root, dirs, files in os.walk(output_dir):
@@ -275,7 +281,7 @@ for root, dirs, files in os.walk(output_dir):
 #SVM model - Category 1 - Sigmoid
 
 #Read the training data file:
-train_data = pd.read_csv(r'/home/divine/Projects/IDS/Datasets/Training_Data/Merged_Files/Category1_80_merged_final.txt')
+train_data = pd.read_csv(os.path.join(current_directory, 'Datasets', 'Training_Data', 'Merged_Files', 'Category1_80_merged_final.txt'))
 
 #Extract the input features (x_train) and the output (y_train):
 x_train = train_data.iloc[:, :-3]
@@ -297,17 +303,17 @@ svm_model = SVC(kernel='sigmoid', gamma=0.01, coef0=0.0, C=1.0)
 svm_model.fit(x_train_scaled, y_train)
 
 # Save the trained model to a file
-joblib.dump(svm_model, '/home/divine/Projects/IDS/Datasets/SVM_Models\Sigmoid_Kernel\svm_model_category1_sigmoid.pkl')
+joblib.dump(svm_model, os.path.join(current_directory, 'Datasets', 'SVM_Models', 'Sigmoid_Kernel', 'svm_model_category1_sigmoid.pkl'))
 
 
 
 #Attack Category 1 - Sigmoid Kernel
 
 #Load the saved model from the file
-loaded_svm_model = joblib.load('/home/divine/Projects/IDS/Final_Data\SVM_Models\Sigmoid_Kernel\svm_model_category1_sigmoid.pkl')
+loaded_svm_model = joblib.load(os.path.join(current_directory, 'Final_Data', 'SVM_Models', 'Sigmoid_Kernel', 'svm_model_category1_sigmoid.pkl'))
 
 #Read the test data file:
-test_data = pd.read_csv(r'/home/divine/Projects/IDS/Datasets/Evaluation_Data/Merged_Files/Category1_20_merged_final.txt')
+test_data = pd.read_csv(os.path.join(current_directory, 'Datasets', 'Evaluation_Data', 'Merged_Files', 'Category1_20_merged_final.txt'))
 
 #Extract the input features for testing (x_test):
 x_test = test_data.iloc[:, :-3]
@@ -372,7 +378,7 @@ print("Balance Accuracy: ", balanced_accuracy)
 #SVM model - Category 1
 
 #Read the training data file:
-train_data = pd.read_csv(r'C:\Desktop\Frederick\Final_Data\Datasets\Training_Data\Merged_Files\Category1_80_merged_final.txt')
+train_data = pd.read_csv(os.path.join(current_directory, 'Datasets', 'Training_Data', 'Merged_Files', 'Category1_80_merged_final.txt'))
 
 #Extract the input features (x_train) and the output (y_train):
 x_train = train_data.iloc[:, :-3]
@@ -394,16 +400,16 @@ svm_model = SVC(kernel='linear', C=1.0)
 svm_model.fit(x_train_scaled, y_train)
 
 # Save the trained model to a file
-joblib.dump(svm_model, '/home/divine/Projects/IDS/SVM_Models/Normal/svm_model_category1_scaled.pkl')
+joblib.dump(svm_model, os.path.join(current_directory, 'SVM_Models', 'Normal', 'svm_model_category1_scaled.pkl'))
 
 
 #Attack Category 1
 
 #Load the saved model from the file
-loaded_svm_model = joblib.load('/home/divine/Projects/IDS/SVM_Models/Normal/svm_model_category1_scaled.pkl')
+loaded_svm_model = joblib.load(os.path.join(current_directory, 'SVM_Models', 'Normal', 'svm_model_category1_scaled.pkl'))
 
 #Read the test data file:
-test_data = pd.read_csv(r'/home/divine/Projects/IDS/Datasets/Evaluation_Data/Merged_Files/Category1_20_merged_final.txt')
+test_data = pd.read_csv(os.path.join(current_directory, 'Datasets', 'Evaluation_Data', 'Merged_Files', 'Category1_20_merged_final.txt'))
 
 #Extract the input features for testing (x_test):
 x_test = test_data.iloc[:, :-3]
@@ -464,7 +470,7 @@ print("Balance Accuracy: ", balanced_accuracy)
 #Under Sampling
 
 # Set the directory path
-directory = r'/home/divine/Projects/IDS/Datasets/Training_Data'
+directory = os.path.join(current_directory, 'Datasets', 'Training_Data')
 
 # Create a new directory for training datasets
 training_directory = os.path.join(directory, 'Undersampling')
@@ -495,7 +501,7 @@ for file_name in files_80:
         output_file.writelines(random_rows)
 
 
-directory = r'/home/divine/Projects/IDS/Datasets/Evaluation_Data'
+directory = os.path.join(current_directory, 'Datasets', 'Evaluation_Data')
 
 # Create a new directory for training datasets
 training_directory = os.path.join(directory, 'Undersampling')
@@ -527,7 +533,7 @@ for file_name in files_20:
         output_file.writelines(random_rows)
 
 
-output_dir = '/home/divine/Projects/IDS/Datasets/Training_Data/Undersampling'
+output_dir = os.path.join(current_directory, 'Datasets', 'Training_Data', 'Undersampling')
 
 # Iterate through all files and subdirectories within output_dir
 for root, dirs, files in os.walk(output_dir):
@@ -552,7 +558,7 @@ for root, dirs, files in os.walk(output_dir):
             df.to_csv(output_file, index=False)
 
 
-output_dir = '/home/divine/Projects/IDS/Datasets/Evaluation_Data/Undersampling'
+output_dir = os.path.join(current_directory, 'Datasets', 'Evaluation_Data', 'Undersampling')
 
 # Iterate through all files and subdirectories within output_dir
 for root, dirs, files in os.walk(output_dir):
@@ -580,7 +586,7 @@ for root, dirs, files in os.walk(output_dir):
 #SVM model - Category 1 - Undersampling
 
 #Read the training data file:
-train_data = pd.read_csv(r'/home/divine/Projects/IDS/Datasets/Training_Data/Undersampling/Category1_80_merged_final.txt')
+train_data = pd.read_csv(os.path.join(current_directory, 'Datasets', 'Training_Data', 'Undersampling', 'Category1_80_merged_final.txt'))
 
 scaler = StandardScaler()
 
@@ -597,16 +603,16 @@ svm_model = SVC(kernel='linear', C=1.0)
 svm_model.fit(x_train_scaled, y_train)
 
 # Save the trained model to a file
-joblib.dump(svm_model, '/home/divine/Projects/IDS/SVM_Models/Undersampling/svm_model_category1_undersampling.pkl')
+joblib.dump(svm_model, os.path.join(current_directory, 'SVM_Models', 'Undersampling', 'svm_model_category1_undersampling.pkl'))
 
 
 #Attack Category 1 - Undersampling
 
 #Load the saved model from the file
-loaded_svm_model = joblib.load('C:\Desktop\Frederick\Final_Data\SVM_Models/Undersampling/svm_model_category1_undersampling.pkl')
+loaded_svm_model = joblib.load(os.path.join(current_directory, 'SVM_Models', 'Undersampling', 'svm_model_category1_undersampling.pkl'))
 
 #Read the test data file:
-test_data = pd.read_csv(r'/home/divine/Projects/IDS/Datasets/Evaluation_Data/Undersampling/Category1_20_merged_final.txt')
+test_data = pd.read_csv(os.path.join(current_directory, 'Datasets', 'Evaluation_Data', 'Undersampling', 'Category1_20_merged_final.txt'))
 
 #Extract the input features for testing (x_test):
 x_test = test_data.iloc[:, :-3]
