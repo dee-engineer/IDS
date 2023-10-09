@@ -304,7 +304,7 @@ joblib.dump(svm_model, '/home/divine/Projects/IDS/Datasets/SVM_Models\Sigmoid_Ke
 #Attack Category 1 - Sigmoid Kernel
 
 #Load the saved model from the file
-loaded_svm_model = joblib.load('C:\Desktop\Frederick\Final_Data\SVM_Models\Sigmoid_Kernel\svm_model_category1_sigmoid.pkl')
+loaded_svm_model = joblib.load('/home/divine/Projects/IDS/Final_Data\SVM_Models\Sigmoid_Kernel\svm_model_category1_sigmoid.pkl')
 
 #Read the test data file:
 test_data = pd.read_csv(r'/home/divine/Projects/IDS/Datasets/Evaluation_Data/Merged_Files/Category1_20_merged_final.txt')
